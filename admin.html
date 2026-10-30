@@ -32,7 +32,7 @@ pre{white-space:pre-wrap;word-break:break-all;background:#141416;border:1px soli
 <h1>PHOTOFLIY <b>ADMIN</b></h1>
 <p style="color:#b9b3a6;font-size:14px">Portfolio content yahan se badlo — phir <b style="color:#fff">portfolio.json download</b> karke repo me replace karo. Ye page main site se link nahi hai, sirf jiske paas iska link hai wahi khol sakta hai.</p>
 
-<div class="note"><b>Auto-save (naya):</b> neeche GitHub token daalo → <b>SAVE</b> dabao — site apne aap update ho jayegi, GitHub kholne ki zaroorat nahi. Token sirf tumhare phone me save hoga.<br><br>
+<div class="note"><b>Auto-save (naya):</b> neeche save password daalo → <b>SAVE</b> dabao — site apne aap update ho jayegi, GitHub kholne ya token banane ki zaroorat nahi. Password sirf tumhare phone me save hoga.<br><br>
 <b>Manual tareeka (purana):</b><br>
 1. Neeche changes karo → <b>Download portfolio.json</b> dabao.<br>
 2. GitHub app / browser me repo <b>photofliy</b> kholo → <b>portfolio.json</b> → Edit (pencil) → purana text delete karke download ki gayi file ka text paste karo → <b>Commit changes</b>.<br>
@@ -49,9 +49,9 @@ pre{white-space:pre-wrap;word-break:break-all;background:#141416;border:1px soli
 <button class="btn" id="addWork">+ NAYA WORK ADD KARO</button>
 
 <div style="margin-top:26px;border:1px solid #4a3f16;border-radius:14px;padding:14px;background:#1c1a10">
-<label style="margin-top:0">Auto-save password (GitHub token — sirf ek baar daalo)</label>
-<input id="ghToken" type="password" placeholder="github_pat_... ya ghp_...">
-<p style="font-size:13px;line-height:1.6;color:#b9b3a6;margin-top:8px">Ye token <b style="color:#fff">sirf tumhare phone me</b> save hoga — site ke code me kabhi nahi jayega. Token banane ke steps: GitHub → profile photo → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token → sirf <b>photofliy</b> repo chuno → Contents: <b>Read and write</b> → Generate → copy karke yahan paste karo.</p>
+<label style="margin-top:0">Save password (sirf ek baar daalo)</label>
+<input id="adminPass" type="password" placeholder="Save password">
+<p style="font-size:13px;line-height:1.6;color:#b9b3a6;margin-top:8px">Ye password <b style="color:#fff">sirf tumhare phone me</b> save hoga. SAVE dabate hi site apne aap update ho jayegi — koi token ya GitHub kholne ki zaroorat nahi.</p>
 <button class="btn" id="autosave">💾 SAVE — SITE PAR SEEDHA UPDATE</button>
 </div>
 
@@ -152,22 +152,17 @@ document.getElementById('addWork').addEventListener('click', function(){
   render();
   window.scrollTo(0, document.body.scrollHeight);
 });
-var tokenInput = document.getElementById('ghToken');
-try { tokenInput.value = localStorage.getItem('photofliy_gh_token') || ''; } catch(e) {}
+var SAVE_URL = 'https://photofliy-autosave.vercel.app/api/save';
+var passInput = document.getElementById('adminPass');
+try { passInput.value = localStorage.getItem('photofliy_admin_pass') || ''; } catch(e) {}
 document.getElementById('autosave').addEventListener('click', function(){
-  var token = tokenInput.value.trim();
+  var pw = passInput.value.trim();
   var msg = document.getElementById('msg');
-  if(!token){ msg.textContent = 'Pehle GitHub token daalo (upar wala box).'; return; }
-  try { localStorage.setItem('photofliy_gh_token', token); } catch(e) {}
+  if(!pw){ msg.textContent = 'Pehle save password daalo (upar wala box).'; return; }
+  try { localStorage.setItem('photofliy_admin_pass', pw); } catch(e) {}
   msg.textContent = 'Save ho raha hai...';
-  var api = 'https://api.github.com/repos/himdyaa/photofliy/contents/portfolio.json';
-  var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
-  fetch(api, {headers: headers}).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
-    if(!res.ok){ throw new Error(res.status === 401 ? 'Token galat ya expire ho gaya hai.' : res.status === 404 ? 'Repo/file nahi mili.' : 'GitHub error: ' + res.status); }
-    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 1))));
-    return fetch(api, {method: 'PUT', headers: {'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({message: 'Admin se portfolio update', content: content, sha: res.body.sha})});
-  }).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
-    if(!res.ok){ throw new Error(res.status === 401 ? 'Token galat ya expire ho gaya hai.' : 'Save fail: ' + res.status + ' — ' + (res.body.message || '')); }
+  fetch(SAVE_URL, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: pw, content: data})}).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
+    if(!res.ok){ throw new Error(res.status === 401 ? 'Password galat hai.' : (res.body.error || ('Save fail: ' + res.status))); }
     msg.textContent = 'Save ho gaya! Site 1-2 minute me apne aap update ho jayegi.';
   }).catch(function(err){
     msg.textContent = 'Save nahi hua: ' + err.message;
