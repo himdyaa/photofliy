@@ -39,7 +39,7 @@ nav.scrolled{background:rgba(10,10,11,.85);backdrop-filter:blur(12px);padding:10
 .nav-links a:hover{color:var(--gold)}
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-bg{position:absolute;inset:0;overflow:hidden;background:radial-gradient(90% 70% at 20% 90%,rgba(232,184,75,.22),transparent 60%),linear-gradient(160deg,#17130a,#0a0a0b 60%)}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;animation:kenburns 22s ease-in-out infinite alternate}
 @keyframes kenburns{from{transform:scale(1) translateY(0)}to{transform:scale(1.14) translateY(-1.5%)}}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.35) 0%,rgba(10,10,11,.15) 40%,rgba(10,10,11,.92) 88%,var(--bg) 100%)}
@@ -155,7 +155,7 @@ footer p{color:var(--mut);margin:12px 0 22px;font-size:14px}
 </nav>
 
 <header class="hero">
-  <div class="hero-bg"><img id="heroImg" src="https://sites.google.com/sitesv-images-rt/AMxu72vX0PqBjhM7u-6jtugHLJItY7Vjh6VEppRQK63pFce3_yWF_k6mf6H44ZdvADA1ea1bzxoSPs8HoE5o5M-2-uJ1l5-Z3Rnjqqrt7DLyyEnoxHyWM4gvBEDHCqjRt5A3CQRXINvyfMMsvXJcw1gt6WYWg5mqGqYdmS9sTLSgfQ9wZPSVTlaBFAkZfGHo6w_ouc8pRSlFiB41d405T_5F1JbnpLLrysMTUrI6iFHuFeY=w1280" alt="Aditya Bhagat"></div>
+  <div class="hero-bg"><img id="heroImg" alt="Aditya Bhagat"></div>
   <div class="hero-shade"></div>
   <div class="hero-content">
     <div class="eyebrow">Hey, I am Aditya</div>
@@ -220,23 +220,18 @@ footer p{color:var(--mut);margin:12px 0 22px;font-size:14px}
   <button class="lb-x" id="lbX">×</button>
   <div class="lb-box">
     <img id="lbImg" src="" alt="">
+    <video id="lbVid" style="display:none;width:100%;max-height:62vh;object-fit:cover" autoplay muted loop playsinline></video>
     <div class="lb-body"><span class="tag" id="lbTag" style="display:inline-block;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#111;background:var(--gold);padding:4px 9px;border-radius:999px"></span>
     <h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
   </div>
 </div>
 
 <script>
-var FALLBACK = {"site":{"name":"Aditya Bhagat","phone":"+918261018327","tagline":"Freelance Video Editor & Motion Graphics Artist","heroImage":"https://sites.google.com/sitesv-images-rt/AMxu72vX0PqBjhM7u-6jtugHLJItY7Vjh6VEppRQK63pFce3_yWF_k6mf6H44ZdvADA1ea1bzxoSPs8HoE5o5M-2-uJ1l5-Z3Rnjqqrt7DLyyEnoxHyWM4gvBEDHCqjRt5A3CQRXINvyfMMsvXJcw1gt6WYWg5mqGqYdmS9sTLSgfQ9wZPSVTlaBFAkZfGHo6w_ouc8pRSlFiB41d405T_5F1JbnpLLrysMTUrI6iFHuFeY=w1280","instagram":"","location":"","about":["Hello, I'm Aditya Bhagat, a passionate Freelance Video Editor and Motion Graphics Artist.","With a creative eye for storytelling and detail, I specialize in cinematic video editing, motion graphics, social media content, reels, YouTube videos, and promotional content. My goal is to transform raw footage into visually engaging and impactful videos that connect with audiences and elevate brands.","I work with content creators, businesses, and individuals, delivering high-quality edits that combine creativity, professionalism, and attention to detail. Every project is crafted with a focus on quality, emotion, and results.","Let's bring your vision to life through powerful visual storytelling."]},"works":[
-{"id":"wedding","title":"Wedding Films & Visual Storytelling","category":"Wedding","image":"https://sites.google.com/sitesv-images-rt/AMxu72vl8bZKhH_8t-pBOGnaKIpyCk58XInULkEf5cLAeP-qVZE9oddA4E1AKs1Gac-LAC4xdb8hbyt617i1UR95niW1nFPA-Ft03Ou0zq-RrercI5KoUBVu9uBb1eNpOVd3dE--6IGq3nIDmbc_kklxt8MRR1-khVJ9NlIZij-gcmYV4Lx5G0t0LSj8gcc97gSiZsAK5pd9dJdgsOuaocfKegRVjsYPxVG9df2UH8ZF=w1280","desc":"We don't just capture weddings — we preserve emotions, moments, and memories that last forever."},
-{"id":"prewedding","title":"Pre-Wedding Cinematic Story","category":"Pre-Wedding","image":"https://sites.google.com/sitesv-images-rt/AMxu72tBA1eaX5NdODNU5Q2tSMdrVTCraHiW3BP6RCJ5Nig-fuIpm_7D3_V6zGyCMvS9bHjjS3070B9zDZweJrkBPuOyqpnNdxUBPK9VwtF5QN25X2AVB_K7WqPOTC4nZl4v-g7dhJaSl5zZP4fuLNc1LZAD9IW4EQxEc6CceStcM2mouNSye19RFEC1QZ8_okA=w1280","desc":"Before the vows are exchanged, there is a beautiful chapter filled with dreams, laughter, and endless love. A pre-wedding shoot captures those genuine moments when two hearts grow closer."},
-{"id":"branding","title":"Branding Shoots & Edits","category":"Branding","image":"https://sites.google.com/sitesv-images-rt/AMxu72un6fMs8oT7HONW-tS-Bnj-5oUse1wkk44LiRglCxgSxUURUyYXGzDnBCQ_t2_aTyMRj20ZR1zFq_1SvAuXUNtgLNFQb8q9MVEBc4STkLPmPoxAz2S2QoAiM6rMMk6Fbnxf0ffA3z3gHLKah5kjPIsOpb7YMRmVxxk34E70Zkgl-cqerVlI0ADvh_CQ_eCN48kn5kt8-tYmgI90usZao8CGkmAzpOJFEvM8yRaGUMQ=w1280","desc":"Branding shoots and edits for video editors and creative freelancers — visuals that make a brand impossible to ignore."},
-{"id":"model","title":"Model Shoots","category":"Model","image":"","desc":"A model shoot is more than capturing photographs — it's about expressing personality, confidence, style, and presence. Every frame is crafted to highlight the model's unique identity."},
-{"id":"concert-sunidhi","title":"Concert — Sunidhi Chauhan","category":"Concert","image":"https://sites.google.com/sitesv-images-rt/AMxu72th-fwgdiXPMPJKLS6RH3w-Zbu2LYfC_Se71xLlwsZw5xUWc_yl94Vb27f21-GCOT1iVMgdVgp6tuROGYZ1J7B4GIOdnGtzlCKXv-19x-X_aMrvQfMnckFmDHtG46DZtI4G8C2XS-h8M9HD41KD5ctimU3h8sCNHHHnQa3Bbqptl0Li7VnzWoDvw7j6n1hLsGaTb34TOwCu5QtQcsDvXM7YaXTy2nxASeshWiRm=w1280","desc":"Live concert energy, cut like cinema — stage, crowd and sound woven into one unforgettable film."},
-{"id":"concert-ashking","title":"Concert — Ash King","category":"Concert","image":"https://sites.google.com/sitesv-images-rt/AMxu72uIGAdXdngxRvFbEYLQZkxAme-gDlU5G1h3VheW-x4h_jhRWAGTTvVkbpU0QCGI_zZoEfUM9E-5Ysg3qimU0G29J0HuRrSVuQ0KvHcLHKwkoNl79P6C8GTavZ4y-bsnW6A3ZkIcgmfPhpBF-B7gexmUdNe11XLcgtNg9dnAETN2gMDI7msc3hprFQynZ4U=w1280","desc":"Concert visuals and edits that carry the night's energy from the stage to the screen."}
-]};
+var FALLBACK = {"site":{"about":["Hello, I'm Aditya Bhagat, a passionate Freelance Video Editor and Motion Graphics Artist.","With a creative eye for storytelling and detail, I specialize in cinematic video editing, motion graphics, social media content, reels, YouTube videos, and promotional content. My goal is to transform raw footage into visually engaging and impactful videos that connect with audiences and elevate brands.","I work with content creators, businesses, and individuals, delivering high-quality edits that combine creativity, professionalism, and attention to detail. Every project is crafted with a focus on quality, emotion, and results.","Let's bring your vision to life through powerful visual storytelling."],"heroImage":"","instagram":"","location":"","name":"Aditya Bhagat","phone":"+918261018327","tagline":"Freelance Video Editor & Motion Graphics Artist"},"works":[{"category":"Wedding","desc":"We don't just capture weddings — we preserve emotions, moments, and memories that last forever.","id":"wedding","image":"https://lh3.googleusercontent.com/d/151d1YP62ySDWVv5pRP6NkNU1bdy9_k9w","title":"Wedding Films & Visual Storytelling"},{"category":"Pre-Wedding","desc":"Before the vows are exchanged, there is a beautiful chapter filled with dreams, laughter, and endless love. A pre-wedding shoot captures those genuine moments when two hearts grow closer.","id":"prewedding","image":"https://lh3.googleusercontent.com/d/1HufmnYPO8dgjVdgWDSu36rXvmzAr13Em","title":"Pre-Wedding Cinematic Story"},{"category":"Branding","desc":"Branding shoots and edits for video editors and creative freelancers — visuals that make a brand impossible to ignore.","id":"branding","image":"","title":"Branding Shoots & Edits"},{"category":"Model","desc":"A model shoot is more than capturing photographs — it's about expressing personality, confidence, style, and presence. Every frame is crafted to highlight the model's unique identity.","id":"model","image":"https://lh3.googleusercontent.com/d/1rkpFz2a7m2BGAJ400_ZXXv5WSO2hyXAp","title":"Model Shoots"},{"category":"Concert","desc":"Live concert energy, cut like cinema — stage, crowd and sound woven into one unforgettable film.","id":"concert-sunidhi","image":"","title":"Concert — Sunidhi Chauhan"},{"category":"Concert","desc":"Concert visuals and edits that carry the night's energy from the stage to the screen.","id":"concert-ashking","image":"","title":"Concert — Ash King","video":"ashking-loop.mp4"}]};
 function start(data){
   var s = data.site || {};
   if(s.heroImage){document.getElementById('heroImg').src = s.heroImage;}
+  else {document.getElementById('heroImg').style.display = 'none';}
   var ig = s.instagram || "";
   document.querySelectorAll('#instaBtn,#instaBtn2').forEach(function(b){
     if(ig){b.href = ig;} else {b.style.display = 'none';}
@@ -255,9 +250,11 @@ function start(data){
   mq.innerHTML = chunk + chunk;
   var grid = document.getElementById('grid');
   function cardHTML(w, i){
-    var media = w.image
-      ? "<img class='ph' loading='lazy' src='" + w.image + "' alt='" + w.title + "'>"
-      : "<div class='type-tile'><b>MODEL</b><span>PORTFOLIO</span></div>";
+    var media = w.video
+      ? "<video class='ph' autoplay muted loop playsinline preload='metadata' src='" + w.video + "'></video>"
+      : (w.image
+        ? "<img class='ph' loading='lazy' src='" + w.image + "' alt='" + w.title + "'>"
+        : "<div class='type-tile'><b>MODEL</b><span>PORTFOLIO</span></div>");
     return "<article class='card' style='animation-delay:" + (i * 90) + "ms' data-cat='" + w.category + "' data-id='" + w.id + "'>" + media +
       "<div class='cap'><span class='tag'>" + w.category + "</span><h3>" + w.title + "</h3><p>" + w.desc + "</p></div></article>";
   }
@@ -269,12 +266,16 @@ function start(data){
     document.getElementById('lbTitle').textContent = w.title;
     document.getElementById('lbDesc').textContent = w.desc;
     var img = document.getElementById('lbImg');
-    if(w.image){img.src = w.image; img.style.display = 'block';} else {img.style.display = 'none';}
+    var vid = document.getElementById('lbVid');
+    if(w.video){vid.src = w.video; vid.style.display = 'block'; img.style.display = 'none';}
+    else if(w.image){img.src = w.image; img.style.display = 'block'; vid.style.display = 'none'; vid.removeAttribute('src');}
+    else {img.style.display = 'none'; vid.style.display = 'none'; vid.removeAttribute('src');}
     document.getElementById('lb').classList.add('open');
   });
-  document.getElementById('lbX').addEventListener('click', function(){document.getElementById('lb').classList.remove('open');});
-  document.getElementById('lb').addEventListener('click', function(e){if(e.target.id === 'lb') e.target.classList.remove('open');});
-  document.addEventListener('keydown', function(e){if(e.key === 'Escape') document.getElementById('lb').classList.remove('open');});
+  function closeLb(){document.getElementById('lb').classList.remove('open'); var v = document.getElementById('lbVid'); v.removeAttribute('src'); v.load();}
+  document.getElementById('lbX').addEventListener('click', closeLb);
+  document.getElementById('lb').addEventListener('click', function(e){if(e.target.id === 'lb') closeLb();});
+  document.addEventListener('keydown', function(e){if(e.key === 'Escape') closeLb();});
   document.getElementById('filters').addEventListener('click', function(e){
     var b = e.target.closest('button'); if(!b) return;
     document.querySelectorAll('#filters button').forEach(function(x){x.classList.remove('on');});
