@@ -32,7 +32,8 @@ pre{white-space:pre-wrap;word-break:break-all;background:#141416;border:1px soli
 <h1>PHOTOFLIY <b>ADMIN</b></h1>
 <p style="color:#b9b3a6;font-size:14px">Portfolio content yahan se badlo — phir <b style="color:#fff">portfolio.json download</b> karke repo me replace karo. Ye page main site se link nahi hai, sirf jiske paas iska link hai wahi khol sakta hai.</p>
 
-<div class="note"><b>Phone se update karne ke steps:</b><br>
+<div class="note"><b>Auto-save (naya):</b> neeche GitHub token daalo → <b>SAVE</b> dabao — site apne aap update ho jayegi, GitHub kholne ki zaroorat nahi. Token sirf tumhare phone me save hoga.<br><br>
+<b>Manual tareeka (purana):</b><br>
 1. Neeche changes karo → <b>Download portfolio.json</b> dabao.<br>
 2. GitHub app / browser me repo <b>photofliy</b> kholo → <b>portfolio.json</b> → Edit (pencil) → purana text delete karke download ki gayi file ka text paste karo → <b>Commit changes</b>.<br>
 3. Site 1–2 minute me apne aap update ho jayegi. Nayi photo/video add karni ho to pehle <b>assets</b> folder me upload karo (repo me), phir uska naam Media list me likho (jaise <b>assets/nayi-photo.jpg</b> ya Drive link). Ek work me 2+ media hone par site par uska card apne aap scroll hoga (har 3 second me, loop me).</div>
@@ -46,6 +47,13 @@ pre{white-space:pre-wrap;word-break:break-all;background:#141416;border:1px soli
 <h2>Works</h2>
 <div id="works"></div>
 <button class="btn" id="addWork">+ NAYA WORK ADD KARO</button>
+
+<div style="margin-top:26px;border:1px solid #4a3f16;border-radius:14px;padding:14px;background:#1c1a10">
+<label style="margin-top:0">Auto-save password (GitHub token — sirf ek baar daalo)</label>
+<input id="ghToken" type="password" placeholder="github_pat_... ya ghp_...">
+<p style="font-size:13px;line-height:1.6;color:#b9b3a6;margin-top:8px">Ye token <b style="color:#fff">sirf tumhare phone me</b> save hoga — site ke code me kabhi nahi jayega. Token banane ke steps: GitHub → profile photo → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token → sirf <b>photofliy</b> repo chuno → Contents: <b>Read and write</b> → Generate → copy karke yahan paste karo.</p>
+<button class="btn" id="autosave">💾 SAVE — SITE PAR SEEDHA UPDATE</button>
+</div>
 
 <div style="margin-top:26px">
 <button class="btn" id="download">⬇ DOWNLOAD portfolio.json</button>
@@ -143,6 +151,27 @@ document.getElementById('addWork').addEventListener('click', function(){
   data.works.push({id: 'work-' + Date.now(), title: 'Naya Work', category: 'Wedding', image: '', video: '', media: [], desc: ''});
   render();
   window.scrollTo(0, document.body.scrollHeight);
+});
+var tokenInput = document.getElementById('ghToken');
+try { tokenInput.value = localStorage.getItem('photofliy_gh_token') || ''; } catch(e) {}
+document.getElementById('autosave').addEventListener('click', function(){
+  var token = tokenInput.value.trim();
+  var msg = document.getElementById('msg');
+  if(!token){ msg.textContent = 'Pehle GitHub token daalo (upar wala box).'; return; }
+  try { localStorage.setItem('photofliy_gh_token', token); } catch(e) {}
+  msg.textContent = 'Save ho raha hai...';
+  var api = 'https://api.github.com/repos/himdyaa/photofliy/contents/portfolio.json';
+  var headers = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+  fetch(api, {headers: headers}).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
+    if(!res.ok){ throw new Error(res.status === 401 ? 'Token galat ya expire ho gaya hai.' : res.status === 404 ? 'Repo/file nahi mili.' : 'GitHub error: ' + res.status); }
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 1))));
+    return fetch(api, {method: 'PUT', headers: {'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'}, body: JSON.stringify({message: 'Admin se portfolio update', content: content, sha: res.body.sha})});
+  }).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
+    if(!res.ok){ throw new Error(res.status === 401 ? 'Token galat ya expire ho gaya hai.' : 'Save fail: ' + res.status + ' — ' + (res.body.message || '')); }
+    msg.textContent = 'Save ho gaya! Site 1-2 minute me apne aap update ho jayegi.';
+  }).catch(function(err){
+    msg.textContent = 'Save nahi hua: ' + err.message;
+  });
 });
 document.getElementById('download').addEventListener('click', function(){
   var blob = new Blob([JSON.stringify(data, null, 1)], {type: 'application/json'});
