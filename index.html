@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHOTOFLIY — Aditya Bhagat | Freelance Video Editor</title>
+<meta name="description" content="Aditya Bhagat — freelance video editor specializing in cinematic edits, motion graphics and social media content. Wedding, pre-wedding, branding, model and concert films.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0b;--panel:#141416;--gold:#e8b84b;--red:#e11d2e;--txt:#f5f0e6;--mut:#b9b3a6}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Manrope',sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+h1,h2,.bebas{font-family:'Bebas Neue',sans-serif;letter-spacing:.03em}
+/* film grain */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:2000;opacity:.05;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+animation:grain 1.2s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-2%,3%)}50%{transform:translate(3%,-2%)}75%{transform:translate(-3%,-3%)}100%{transform:translate(0,0)}}
+/* preloader */
+#loader{position:fixed;inset:0;background:#000;z-index:3000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;transition:opacity .6s,visibility .6s}
+#loader.hide{opacity:0;visibility:hidden}
+#loader .l-word{font-family:'Bebas Neue',sans-serif;font-size:15vw;letter-spacing:.12em;display:flex}
+#loader .l-word span{animation:rise .7s cubic-bezier(.2,.9,.3,1) both}
+@keyframes rise{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+#loader .l-bar{width:180px;height:3px;background:#222;overflow:hidden}
+#loader .l-bar i{display:block;height:100%;width:40%;background:var(--gold);animation:slide 1s infinite}
+@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(450%)}}
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;transition:background .3s,padding .3s}
+nav.scrolled{background:rgba(10,10,11,.85);backdrop-filter:blur(12px);padding:10px 22px;border-bottom:1px solid #26262a}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.12em}
+.logo b{color:var(--gold)}
+.nav-links{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+.nav-links a{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+.nav-links a:hover{color:var(--gold)}
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;animation:kenburns 22s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1) translateY(0)}to{transform:scale(1.14) translateY(-1.5%)}}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.35) 0%,rgba(10,10,11,.15) 40%,rgba(10,10,11,.92) 88%,var(--bg) 100%)}
+.hero-shade:after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 20% 90%,rgba(232,184,75,.16),transparent 60%)}
+.hero-content{position:relative;z-index:2;padding:110px 22px 46px;width:100%;max-width:1100px;margin:0 auto}
+.eyebrow{font-size:13px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.eyebrow:before{content:"";width:34px;height:2px;background:var(--gold);animation:linegrow 1s .3s both}
+@keyframes linegrow{from{width:0}to{width:34px}}
+.hero h1{font-size:clamp(64px,17vw,168px);line-height:.9;margin:10px 0 6px}
+.hero h1 .row{display:block;overflow:hidden}
+.hero h1 .row span{display:block;animation:rise .9s cubic-bezier(.2,.9,.3,1) both}
+.hero h1 .row:nth-child(2) span{animation-delay:.15s;color:transparent;-webkit-text-stroke:2px var(--gold)}
+.grad{background:linear-gradient(90deg,var(--gold),#fff3c4,var(--gold));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 4s linear infinite}
+@keyframes shimmer{to{background-position:200% 0}}
+.hero-role{font-size:clamp(17px,4.5vw,26px);font-weight:800;letter-spacing:.02em}
+.hero p{max-width:620px;color:var(--mut);line-height:1.7;margin:14px 0 22px;font-size:15px}
+.btn{display:inline-block;padding:14px 26px;border-radius:999px;font-weight:800;font-size:14px;letter-spacing:.06em;position:relative;overflow:hidden;transition:transform .2s}
+.btn:active{transform:scale(.96)}
+.btn-gold{background:var(--gold);color:#111}
+.btn-gold:after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:shine 3.2s ease infinite}
+@keyframes shine{0%,60%{left:-80%}100%{left:160%}}
+.btn-line{border:1.5px solid #3a3a3f;color:var(--txt);margin-left:10px}
+.cta-row{display:flex;flex-wrap:wrap;gap:4px}
+.scroll-hint{margin-top:34px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px}
+.scroll-hint i{width:22px;height:36px;border:2px solid var(--mut);border-radius:14px;display:block;position:relative}
+.scroll-hint i:after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;border-radius:4px;background:var(--gold);animation:drop 1.6s infinite}
+@keyframes drop{0%{transform:translateY(0);opacity:1}70%{transform:translateY(12px);opacity:0}100%{opacity:0}}
+.stats{display:flex;gap:26px;margin-top:28px;flex-wrap:wrap}
+.stat b{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--gold);display:block;line-height:1}
+.stat span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+/* marquee */
+.marquee{border-top:1px solid #26262a;border-bottom:1px solid #26262a;padding:14px 0;overflow:hidden;white-space:nowrap;background:#0e0e10}
+.marquee-track{display:inline-block;animation:scroll 26s linear infinite}
+.marquee-track span{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.14em;padding-right:18px}
+.marquee-track span i{color:var(--gold);font-style:normal}
+@keyframes scroll{to{transform:translateX(-50%)}}
+/* sections */
+section{padding:64px 22px;max-width:1100px;margin:0 auto}
+.sec-head{margin-bottom:26px}
+.sec-tag{font-size:12px;font-weight:800;letter-spacing:.3em;color:var(--red);text-transform:uppercase}
+.sec-head h2{font-size:clamp(40px,9vw,72px);line-height:1;margin-top:6px}
+.underline{width:0;height:4px;background:var(--gold);margin-top:10px;transition:width .9s cubic-bezier(.2,.9,.3,1)}
+.in .underline{width:86px}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+/* filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{border:1px solid #333338;background:transparent;color:var(--mut);padding:9px 16px;border-radius:999px;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.filters button.on{background:var(--gold);color:#111;border-color:var(--gold);transform:scale(1.05)}
+/* work grid */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{position:relative;border-radius:18px;overflow:hidden;background:var(--panel);cursor:pointer;aspect-ratio:4/5;transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 50px rgba(0,0,0,.55)}
+.card .ph{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.9,.3,1)}
+.card:hover .ph{transform:scale(1.08)}
+.card:after{content:"";position:absolute;inset:0;border:1.5px solid transparent;border-radius:18px;transition:border-color .3s;pointer-events:none}
+.card:hover:after{border-color:rgba(232,184,75,.8)}
+.card .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 16px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.88))}
+.card .tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#111;background:var(--gold);padding:4px 9px;border-radius:999px;margin-bottom:8px}
+.card h3{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.04em;line-height:1}
+.card p{font-size:12.5px;color:#d8d2c6;line-height:1.5;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.type-tile{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(120% 100% at 50% 0%,#2a2410,var(--panel) 60%)}
+.type-tile b{font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:.1em;color:var(--gold);animation:floaty 4s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.type-tile span{font-size:11px;letter-spacing:.3em;color:var(--mut)}
+.card.hide{animation:cardout .3s forwards}
+@keyframes cardout{to{opacity:0;transform:scale(.92)}}
+/* about + services */
+.about p{color:var(--mut);line-height:1.85;font-size:15.5px;margin-bottom:14px}
+.about p b{color:var(--txt)}
+.quote{border-left:3px solid var(--gold);padding:6px 0 6px 16px;font-size:19px;font-weight:800;line-height:1.5;margin:22px 0}
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.svc div{background:var(--panel);border:1px solid #232327;border-radius:16px;padding:20px;transition:transform .3s,border-color .3s}
+.svc div:hover{transform:translateY(-4px);border-color:var(--gold)}
+.svc i{font-style:normal;font-size:26px;color:var(--gold)}
+.svc h3{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;margin:10px 0 6px}
+.svc p{font-size:13.5px;color:var(--mut);line-height:1.6}
+/* footer */
+footer{border-top:1px solid #26262a;padding:56px 22px 40px;text-align:center;background:#0c0c0e}
+footer h2{font-size:clamp(38px,9vw,66px);line-height:1.05}
+footer p{color:var(--mut);margin:12px 0 22px;font-size:14px}
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1500;display:none;align-items:flex-end;justify-content:center;padding:0}
+.lb.open{display:flex}
+.lb-box{width:100%;max-width:760px;max-height:92vh;overflow:auto;background:#121214;border-radius:22px 22px 0 0;animation:lbup .35s cubic-bezier(.2,.9,.3,1)}
+@keyframes lbup{from{transform:translateY(60px);opacity:0}to{transform:none;opacity:1}}
+.lb-box img{width:100%;max-height:62vh;object-fit:cover}
+.lb-body{padding:20px 20px 28px}
+.lb-body h3{font-family:'Bebas Neue',sans-serif;font-size:34px}
+.lb-body p{color:var(--mut);line-height:1.7;font-size:14.5px;margin-top:8px}
+.lb-x{position:fixed;top:14px;right:16px;z-index:1600;width:42px;height:42px;border-radius:50%;border:1px solid #444;background:#111;color:#fff;font-size:20px;cursor:pointer}
+@media(max-width:600px){.grid,.svc{grid-template-columns:1fr}.nav-links{gap:12px}.card{aspect-ratio:4/4.6}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div id="loader"><div class="l-word"><span>P</span><span>H</span><span>O</span><span>T</span><span>O</span><span>F</span><span>L</span><span>I</span><span>Y</span></div><div class="l-bar"><i></i></div></div>
+
+<nav id="nav">
+  <a class="logo" href="#">PHOTO<span style="color:var(--gold)">F</span>LIY<b>.</b></a>
+  <div class="nav-links">
+    <a href="#work">Work</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg"><img id="heroImg" src="https://sites.google.com/sitesv-images-rt/AMxu72vX0PqBjhM7u-6jtugHLJItY7Vjh6VEppRQK63pFce3_yWF_k6mf6H44ZdvADA1ea1bzxoSPs8HoE5o5M-2-uJ1l5-Z3Rnjqqrt7DLyyEnoxHyWM4gvBEDHCqjRt5A3CQRXINvyfMMsvXJcw1gt6WYWg5mqGqYdmS9sTLSgfQ9wZPSVTlaBFAkZfGHo6w_ouc8pRSlFiB41d405T_5F1JbnpLLrysMTUrI6iFHuFeY=w1280" alt="Aditya Bhagat"></div>
+  <div class="hero-shade"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Hey, I am Aditya</div>
+    <h1><span class="row"><span>ADITYA</span></span><span class="row"><span>BHAGAT</span></span></h1>
+    <div class="hero-role"><span class="grad">Freelance Video Editor</span> &amp; Motion Graphics Artist</div>
+    <p id="heroText">I help content creators, businesses and individuals transform raw footage into engaging, professional-quality videos that capture attention and tell compelling stories.</p>
+    <div class="cta-row">
+      <a class="btn btn-gold" href="#work">VIEW WORK ↓</a>
+      <a class="btn btn-line" id="instaBtn" href="#" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b><span data-count="5">0</span></b><span>Categories</span></div>
+      <div class="stat"><b><span data-count="6">0</span></b><span>Featured Frames</span></div>
+      <div class="stat"><b>100%</b><span>Custom Edits</span></div>
+    </div>
+    <div class="scroll-hint"><i></i> Scroll to explore</div>
+  </div>
+</header>
+
+<div class="marquee"><div class="marquee-track" id="mq"></div></div>
+
+<section id="work" class="reveal">
+  <div class="sec-head"><div class="sec-tag">Selected Work</div><h2>FRAMES THAT<br>FEEL ALIVE</h2><div class="underline"></div></div>
+  <div class="filters" id="filters">
+    <button class="on" data-f="All">All</button>
+    <button data-f="Wedding">Wedding</button>
+    <button data-f="Pre-Wedding">Pre-Wedding</button>
+    <button data-f="Branding">Branding</button>
+    <button data-f="Model">Model</button>
+    <button data-f="Concert">Concert</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="about" class="about reveal">
+  <div class="sec-head"><div class="sec-tag">About</div><h2>THE EDITOR<br>BEHIND THE LENS</h2><div class="underline"></div></div>
+  <div id="aboutText"></div>
+  <div class="quote">"We don't just capture weddings — we preserve emotions, moments, and memories that last forever."</div>
+</section>
+
+<section id="services" class="reveal">
+  <div class="sec-head"><div class="sec-tag">What I Do</div><h2>SERVICES</h2><div class="underline"></div></div>
+  <div class="svc">
+    <div><i>▶</i><h3>CINEMATIC EDITS</h3><p>Wedding films, pre-wedding stories and promos cut for emotion — pacing, colour and music that feel like cinema.</p></div>
+    <div><i>✦</i><h3>MOTION GRAPHICS</h3><p>Titles, transitions and animated brand elements that make content look premium and unmistakably yours.</p></div>
+    <div><i>◎</i><h3>REELS &amp; SOCIAL</h3><p>Scroll-stopping reels and short-form content built for creators, brands and artists.</p></div>
+    <div><i>⬢</i><h3>YOUTUBE &amp; PROMO</h3><p>Long-form YouTube edits and promotional videos that hold attention till the last frame.</p></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="sec-tag" style="text-align:center">Get In Touch</div>
+  <h2>LET'S CREATE SOMETHING<br><span class="grad">CINEMATIC</span></h2>
+  <p>Bookings &amp; collaborations — reach out on Instagram.</p>
+  <a class="btn btn-gold" id="instaBtn2" href="#" target="_blank" rel="noopener">INSTAGRAM ↗</a>
+  <p style="margin-top:26px;font-size:12px;letter-spacing:.2em">© PHOTOFLIY • ADITYA BHAGAT</p>
+</footer>
+
+<div class="lb" id="lb">
+  <button class="lb-x" id="lbX">×</button>
+  <div class="lb-box">
+    <img id="lbImg" src="" alt="">
+    <div class="lb-body"><span class="tag" id="lbTag" style="display:inline-block;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#111;background:var(--gold);padding:4px 9px;border-radius:999px"></span>
+    <h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
+  </div>
+</div>
+
+<script>
+var FALLBACK = {"site":{"name":"Aditya Bhagat","tagline":"Freelance Video Editor & Motion Graphics Artist","heroImage":"https://sites.google.com/sitesv-images-rt/AMxu72vX0PqBjhM7u-6jtugHLJItY7Vjh6VEppRQK63pFce3_yWF_k6mf6H44ZdvADA1ea1bzxoSPs8HoE5o5M-2-uJ1l5-Z3Rnjqqrt7DLyyEnoxHyWM4gvBEDHCqjRt5A3CQRXINvyfMMsvXJcw1gt6WYWg5mqGqYdmS9sTLSgfQ9wZPSVTlaBFAkZfGHo6w_ouc8pRSlFiB41d405T_5F1JbnpLLrysMTUrI6iFHuFeY=w1280","instagram":"","location":"","about":["Hello, I'm Aditya Bhagat, a passionate Freelance Video Editor and Motion Graphics Artist.","With a creative eye for storytelling and detail, I specialize in cinematic video editing, motion graphics, social media content, reels, YouTube videos, and promotional content. My goal is to transform raw footage into visually engaging and impactful videos that connect with audiences and elevate brands.","I work with content creators, businesses, and individuals, delivering high-quality edits that combine creativity, professionalism, and attention to detail. Every project is crafted with a focus on quality, emotion, and results.","Let's bring your vision to life through powerful visual storytelling."]},"works":[
+{"id":"wedding","title":"Wedding Films & Visual Storytelling","category":"Wedding","image":"https://sites.google.com/sitesv-images-rt/AMxu72vl8bZKhH_8t-pBOGnaKIpyCk58XInULkEf5cLAeP-qVZE9oddA4E1AKs1Gac-LAC4xdb8hbyt617i1UR95niW1nFPA-Ft03Ou0zq-RrercI5KoUBVu9uBb1eNpOVd3dE--6IGq3nIDmbc_kklxt8MRR1-khVJ9NlIZij-gcmYV4Lx5G0t0LSj8gcc97gSiZsAK5pd9dJdgsOuaocfKegRVjsYPxVG9df2UH8ZF=w1280","desc":"We don't just capture weddings — we preserve emotions, moments, and memories that last forever."},
+{"id":"prewedding","title":"Pre-Wedding Cinematic Story","category":"Pre-Wedding","image":"https://sites.google.com/sitesv-images-rt/AMxu72tBA1eaX5NdODNU5Q2tSMdrVTCraHiW3BP6RCJ5Nig-fuIpm_7D3_V6zGyCMvS9bHjjS3070B9zDZweJrkBPuOyqpnNdxUBPK9VwtF5QN25X2AVB_K7WqPOTC4nZl4v-g7dhJaSl5zZP4fuLNc1LZAD9IW4EQxEc6CceStcM2mouNSye19RFEC1QZ8_okA=w1280","desc":"Before the vows are exchanged, there is a beautiful chapter filled with dreams, laughter, and endless love. A pre-wedding shoot captures those genuine moments when two hearts grow closer."},
+{"id":"branding","title":"Branding Shoots & Edits","category":"Branding","image":"https://sites.google.com/sitesv-images-rt/AMxu72un6fMs8oT7HONW-tS-Bnj-5oUse1wkk44LiRglCxgSxUURUyYXGzDnBCQ_t2_aTyMRj20ZR1zFq_1SvAuXUNtgLNFQb8q9MVEBc4STkLPmPoxAz2S2QoAiM6rMMk6Fbnxf0ffA3z3gHLKah5kjPIsOpb7YMRmVxxk34E70Zkgl-cqerVlI0ADvh_CQ_eCN48kn5kt8-tYmgI90usZao8CGkmAzpOJFEvM8yRaGUMQ=w1280","desc":"Branding shoots and edits for video editors and creative freelancers — visuals that make a brand impossible to ignore."},
+{"id":"model","title":"Model Shoots","category":"Model","image":"","desc":"A model shoot is more than capturing photographs — it's about expressing personality, confidence, style, and presence. Every frame is crafted to highlight the model's unique identity."},
+{"id":"concert-sunidhi","title":"Concert — Sunidhi Chauhan","category":"Concert","image":"https://sites.google.com/sitesv-images-rt/AMxu72th-fwgdiXPMPJKLS6RH3w-Zbu2LYfC_Se71xLlwsZw5xUWc_yl94Vb27f21-GCOT1iVMgdVgp6tuROGYZ1J7B4GIOdnGtzlCKXv-19x-X_aMrvQfMnckFmDHtG46DZtI4G8C2XS-h8M9HD41KD5ctimU3h8sCNHHHnQa3Bbqptl0Li7VnzWoDvw7j6n1hLsGaTb34TOwCu5QtQcsDvXM7YaXTy2nxASeshWiRm=w1280","desc":"Live concert energy, cut like cinema — stage, crowd and sound woven into one unforgettable film."},
+{"id":"concert-ashking","title":"Concert — Ash King","category":"Concert","image":"https://sites.google.com/sitesv-images-rt/AMxu72uIGAdXdngxRvFbEYLQZkxAme-gDlU5G1h3VheW-x4h_jhRWAGTTvVkbpU0QCGI_zZoEfUM9E-5Ysg3qimU0G29J0HuRrSVuQ0KvHcLHKwkoNl79P6C8GTavZ4y-bsnW6A3ZkIcgmfPhpBF-B7gexmUdNe11XLcgtNg9dnAETN2gMDI7msc3hprFQynZ4U=w1280","desc":"Concert visuals and edits that carry the night's energy from the stage to the screen."}
+]};
+function start(data){
+  var s = data.site || {};
+  if(s.heroImage){document.getElementById('heroImg').src = s.heroImage;}
+  var ig = s.instagram || "";
+  document.querySelectorAll('#instaBtn,#instaBtn2').forEach(function(b){
+    if(ig){b.href = ig;} else {b.style.display = 'none';}
+  });
+  var at = document.getElementById('aboutText');
+  (s.about || FALLBACK.site.about).forEach(function(p,i){
+    var el = document.createElement('p');
+    el.innerHTML = i === 0 ? ("<b>" + p + "</b>") : p;
+    at.appendChild(el);
+  });
+  var mq = document.getElementById('mq');
+  var words = ["CINEMATIC","WEDDING","PRE-WEDDING","BRANDING","MODEL","CONCERT","MOTION GRAPHICS","REELS"];
+  var chunk = words.map(function(w){return "<span>" + w + " <i>✦</i> </span>";}).join("");
+  mq.innerHTML = chunk + chunk;
+  var grid = document.getElementById('grid');
+  function cardHTML(w){
+    var media = w.image
+      ? "<img class='ph' loading='lazy' src='" + w.image + "' alt='" + w.title + "'>"
+      : "<div class='type-tile'><b>MODEL</b><span>PORTFOLIO</span></div>";
+    return "<article class='card' data-cat='" + w.category + "' data-id='" + w.id + "'>" + media +
+      "<div class='cap'><span class='tag'>" + w.category + "</span><h3>" + w.title + "</h3><p>" + w.desc + "</p></div></article>";
+  }
+  grid.innerHTML = (data.works || []).map(cardHTML).join("");
+  grid.addEventListener('click', function(e){
+    var c = e.target.closest('.card'); if(!c) return;
+    var w = (data.works || []).find(function(x){return x.id === c.dataset.id;}); if(!w) return;
+    document.getElementById('lbTag').textContent = w.category;
+    document.getElementById('lbTitle').textContent = w.title;
+    document.getElementById('lbDesc').textContent = w.desc;
+    var img = document.getElementById('lbImg');
+    if(w.image){img.src = w.image; img.style.display = 'block';} else {img.style.display = 'none';}
+    document.getElementById('lb').classList.add('open');
+  });
+  document.getElementById('lbX').addEventListener('click', function(){document.getElementById('lb').classList.remove('open');});
+  document.getElementById('lb').addEventListener('click', function(e){if(e.target.id === 'lb') e.target.classList.remove('open');});
+  document.addEventListener('keydown', function(e){if(e.key === 'Escape') document.getElementById('lb').classList.remove('open');});
+  document.getElementById('filters').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    document.querySelectorAll('#filters button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    var f = b.dataset.f;
+    document.querySelectorAll('.card').forEach(function(c){
+      var show = (f === 'All' || c.dataset.cat === f);
+      if(show){c.style.display = ''; c.classList.remove('hide');}
+      else {c.classList.add('hide'); setTimeout(function(){c.style.display = 'none';}, 280);}
+    });
+  });
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);}
+    });
+  }, {threshold: 0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  var cio = new IntersectionObserver(function(es){
+    es.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el = en.target, target = parseInt(el.dataset.count, 10), n = 0;
+      var t = setInterval(function(){ n++; el.textContent = n; if(n >= target) clearInterval(t); }, 180);
+      cio.unobserve(el);
+    });
+  }, {threshold: 0.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+}
+fetch('portfolio.json').then(function(r){return r.json();}).then(start).catch(function(){start(FALLBACK);});
+window.addEventListener('scroll', function(){
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+window.addEventListener('load', function(){ setTimeout(function(){document.getElementById('loader').classList.add('hide');}, 500); });
+setTimeout(function(){document.getElementById('loader').classList.add('hide');}, 2500);
+</script>
+</body>
+</html>

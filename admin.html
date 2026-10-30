@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHOTOFLIY Admin</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0b;color:#f5f0e6;font-family:system-ui,sans-serif;padding:20px;max-width:760px;margin:0 auto}
+h1{font-size:30px;letter-spacing:.06em}
+h1 b{color:#e8b84b}
+.note{background:#1c1a10;border:1px solid #4a3f16;border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.6;margin:14px 0 22px;color:#e8ddb8}
+h2{font-size:17px;margin:26px 0 12px;color:#e8b84b}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#b9b3a6;margin:12px 0 5px}
+input,textarea,select{width:100%;background:#141416;border:1px solid #333338;color:#fff;border-radius:10px;padding:11px 12px;font-size:14.5px;font-family:inherit}
+textarea{min-height:70px}
+.work{border:1px solid #26262a;border-radius:14px;padding:14px;margin-bottom:12px;background:#121214}
+.btn{display:inline-block;background:#e8b84b;color:#111;border:0;border-radius:999px;padding:13px 22px;font-weight:800;font-size:14px;cursor:pointer;margin:6px 6px 6px 0}
+.btn-line{background:transparent;color:#fff;border:1.5px solid #444}
+.btn-red{background:transparent;color:#ff7b7b;border:1.5px solid #5a2323}
+.steps{font-size:13.5px;line-height:1.8;color:#b9b3a6;margin-top:10px}
+.steps b{color:#fff}
+pre{white-space:pre-wrap;word-break:break-all;background:#141416;border:1px solid #333;padding:12px;border-radius:10px;font-size:11px;max-height:220px;overflow:auto;margin-top:12px}
+</style>
+</head>
+<body>
+<h1>PHOTOFLIY <b>ADMIN</b></h1>
+<p style="color:#b9b3a6;font-size:14px">Portfolio content yahan se badlo — phir <b style="color:#fff">portfolio.json download</b> karke repo me replace karo. Ye page main site se link nahi hai, sirf jiske paas iska link hai wahi khol sakta hai.</p>
+
+<div class="note"><b>Phone se update karne ke steps:</b><br>
+1. Neeche changes karo → <b>Download portfolio.json</b> dabao.<br>
+2. GitHub app / browser me repo <b>photofliy</b> kholo → <b>portfolio.json</b> → Edit (pencil) → purana text delete karke download ki gayi file ka text paste karo → <b>Commit changes</b>.<br>
+3. Site 1–2 minute me apne aap update ho jayegi. Nayi photo add karni ho to pehle <b>assets</b> folder me upload karo, phir uska naam yahan Image field me likho (jaise <b>assets/nayi-photo.jpg</b>).</div>
+
+<h2>Site Settings</h2>
+<label>Hero image</label><input id="heroImage">
+<label>Instagram link (poora URL, jaise https://instagram.com/username)</label><input id="instagram" placeholder="Khali ho to Instagram button site par nahi dikhega">
+<label>Location</label><input id="location" placeholder="Jaise: Gondia, Maharashtra">
+<label>About — ek paragraph per line</label><textarea id="about" rows="5"></textarea>
+
+<h2>Works</h2>
+<div id="works"></div>
+<button class="btn" id="addWork">+ NAYA WORK ADD KARO</button>
+
+<div style="margin-top:26px">
+<button class="btn" id="download">⬇ DOWNLOAD portfolio.json</button>
+<button class="btn btn-line" id="copy">COPY JSON</button>
+<button class="btn btn-line" id="reset">RESET</button>
+</div>
+<pre id="preview"></pre>
+<p class="steps" id="msg"></p>
+
+<script>
+var data = null;
+var CATS = ["Wedding","Pre-Wedding","Branding","Model","Concert"];
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function render(){
+  var w = document.getElementById('works');
+  w.innerHTML = "";
+  data.works.forEach(function(x, i){
+    var d = document.createElement('div');
+    d.className = 'work';
+    d.innerHTML = "<label>Title</label><input data-k='title' data-i='"+i+"' value=\""+esc(x.title).replace(/"/g,'&quot;')+"\">" +
+      "<label>Category</label><select data-k='category' data-i='"+i+"'>" + CATS.map(function(c){return "<option"+(c===x.category?" selected":"")+">"+c+"</option>";}).join("") + "</select>" +
+      "<label>Image (assets/... ya poora URL; khali = text tile)</label><input data-k='image' data-i='"+i+"' value=\""+esc(x.image).replace(/"/g,'&quot;')+"\">" +
+      "<label>Description</label><textarea data-k='desc' data-i='"+i+"'>"+esc(x.desc)+"</textarea>" +
+      "<button class='btn btn-red' data-del='"+i+"'>DELETE</button>";
+    w.appendChild(d);
+  });
+  document.getElementById('heroImage').value = data.site.heroImage || "";
+  document.getElementById('instagram').value = data.site.instagram || "";
+  document.getElementById('location').value = data.site.location || "";
+  document.getElementById('about').value = (data.site.about || []).join("\n");
+  document.getElementById('preview').textContent = JSON.stringify(data, null, 1).slice(0, 3000);
+}
+document.addEventListener('input', function(e){
+  var t = e.target;
+  if(t.dataset && t.dataset.k !== undefined){
+    data.works[parseInt(t.dataset.i, 10)][t.dataset.k] = t.value;
+  }
+  if(t.id === 'heroImage') data.site.heroImage = t.value;
+  if(t.id === 'instagram') data.site.instagram = t.value;
+  if(t.id === 'location') data.site.location = t.value;
+  if(t.id === 'about') data.site.about = t.value.split("\n").filter(function(l){return l.trim() !== "";});
+  document.getElementById('preview').textContent = JSON.stringify(data, null, 1).slice(0, 3000);
+});
+document.addEventListener('click', function(e){
+  if(e.target.dataset && e.target.dataset.del !== undefined){
+    if(confirm('Ye work delete kar dun?')){ data.works.splice(parseInt(e.target.dataset.del, 10), 1); render(); }
+  }
+});
+document.getElementById('addWork').addEventListener('click', function(){
+  data.works.push({id: 'work-' + Date.now(), title: 'Naya Work', category: 'Wedding', image: '', desc: ''});
+  render();
+  window.scrollTo(0, document.body.scrollHeight);
+});
+document.getElementById('download').addEventListener('click', function(){
+  var blob = new Blob([JSON.stringify(data, null, 1)], {type: 'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'portfolio.json'; a.click();
+  document.getElementById('msg').textContent = 'Download ho gaya — ab GitHub me portfolio.json replace karo (steps upar).';
+});
+document.getElementById('copy').addEventListener('click', function(){
+  navigator.clipboard.writeText(JSON.stringify(data, null, 1)).then(function(){
+    document.getElementById('msg').textContent = 'JSON copy ho gaya — GitHub me portfolio.json edit karke paste karo.';
+  });
+});
+document.getElementById('reset').addEventListener('click', function(){ location.reload(); });
+fetch('portfolio.json').then(function(r){return r.json();}).then(function(j){data = j; render();}).catch(function(){
+  document.getElementById('msg').textContent = 'portfolio.json load nahi hua — check karo ki admin.html aur portfolio.json ek hi folder me hon.';
+});
+</script>
+</body>
+</html>
