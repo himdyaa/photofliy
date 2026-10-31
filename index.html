@@ -235,9 +235,26 @@ footer p{color:var(--mut);margin:12px 0 22px;font-size:14px}
 
 <script>
 var FALLBACK = {"site":{"about":["Hello, I'm Aditya Bhagat, a passionate Freelance Video Editor and Motion Graphics Artist.","With a creative eye for storytelling and detail, I specialize in cinematic video editing, motion graphics, social media content, reels, YouTube videos, and promotional content. My goal is to transform raw footage into visually engaging and impactful videos that connect with audiences and elevate brands.","I work with content creators, businesses, and individuals, delivering high-quality edits that combine creativity, professionalism, and attention to detail. Every project is crafted with a focus on quality, emotion, and results.","Let's bring your vision to life through powerful visual storytelling."],"heroImage":"","instagram":"","location":"","name":"Aditya Bhagat","phone":"+918261018327","tagline":"Freelance Video Editor & Motion Graphics Artist"},"works":[{"category":"Wedding","desc":"We don't just capture weddings — we preserve emotions, moments, and memories that last forever.","id":"wedding","image":"https://lh3.googleusercontent.com/d/151d1YP62ySDWVv5pRP6NkNU1bdy9_k9w","title":"Wedding Films & Visual Storytelling"},{"category":"Pre-Wedding","desc":"Before the vows are exchanged, there is a beautiful chapter filled with dreams, laughter, and endless love. A pre-wedding shoot captures those genuine moments when two hearts grow closer.","id":"prewedding","image":"https://lh3.googleusercontent.com/d/1HufmnYPO8dgjVdgWDSu36rXvmzAr13Em","title":"Pre-Wedding Cinematic Story"},{"category":"Branding","desc":"Branding shoots and edits for video editors and creative freelancers — visuals that make a brand impossible to ignore.","id":"branding","image":"","title":"Branding Shoots & Edits"},{"category":"Model","desc":"A model shoot is more than capturing photographs — it's about expressing personality, confidence, style, and presence. Every frame is crafted to highlight the model's unique identity.","id":"model","image":"https://lh3.googleusercontent.com/d/1rkpFz2a7m2BGAJ400_ZXXv5WSO2hyXAp","title":"Model Shoots"},{"category":"Concert","desc":"Live concert energy, cut like cinema — stage, crowd and sound woven into one unforgettable film.","id":"concert-sunidhi","image":"","title":"Concert — Sunidhi Chauhan"},{"category":"Concert","desc":"Concert visuals and edits that carry the night's energy from the stage to the screen.","id":"concert-ashking","image":"","title":"Concert — Ash King","video":"ashking-loop.mp4"}]};
-function start(data){
-  var s = data.site || {};
-  if(s.heroImage){document.getElementById('heroImg').src = s.heroImage;}
+function fixDrive(src, isVideo){
+    if(!src) return src;
+    var m = src.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/);
+    if(m) return isVideo ? 'https://drive.usercontent.google.com/download?id=' + m[1] + '&export=download&confirm=t' : 'https://lh3.googleusercontent.com/d/' + m[1];
+    var t = src.match(/[?&]id=([^&]+)/);
+      if(t && src.indexOf('drive.google.com') !== -1) return isVideo ? 'https://drive.usercontent.google.com/download?id=' + t[1] + '&export=download&confirm=t' : 'https://lh3.googleusercontent.com/d/' + t[1];
+  return src;
+}
+function normalizeData(d){
+    if(d.site && d.site.heroImage) d.site.heroImage = fixDrive(d.site.heroImage, false);
+    (d.works || []).forEach(function(w){
+          if(w.image) w.image = fixDrive(w.image, false);
+          if(w.video) w.video = fixDrive(w.video, true);
+          (w.media || []).forEach(function(m){ m.src = fixDrive(m.src, m.type === 'video'); });
+    });
+}
+  function start(data){
+    normalizeData(data);
+    var s = data.site || {};
+    if(s.heroImage){document.getElementById('heroImg').src = s.heroImage;}
   else {document.getElementById('heroImg').style.display = 'none';}
   var ig = s.instagram || "";
   document.querySelectorAll('#instaBtn,#instaBtn2').forEach(function(b){
