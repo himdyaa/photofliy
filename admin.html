@@ -155,13 +155,30 @@ document.getElementById('addWork').addEventListener('click', function(){
 var SAVE_URL = 'https://photofliy-autosave.vercel.app/api/save';
 var passInput = document.getElementById('adminPass');
 try { passInput.value = localStorage.getItem('photofliy_admin_pass') || ''; } catch(e) {}
-document.getElementById('autosave').addEventListener('click', function(){
+function fixDrive(src, isVideo){
+    if(!src) return src;
+    var m = src.match(/drive\.google\.com\/file\/d\/([^\/\?]+)/);
+    if(m) return isVideo ? 'https://drive.usercontent.google.com/download?id=' + m[1] + '&export=download&confirm=t' : 'https://lh3.googleusercontent.com/d/' + m[1];
+    var t = src.match(/[?&]id=([^&]+)/);
+      if(t && src.indexOf('drive.google.com') !== -1) return isVideo ? 'https://drive.usercontent.google.com/download?id=' + t[1] + '&export=download&confirm=t' : 'https://lh3.googleusercontent.com/d/' + t[1];
+       return src;
+}
+  function normalizeData(d){
+      if(d.site && d.site.heroImage) d.site.heroImage = fixDrive(d.site.heroImage, false);
+      (d.works || []).forEach(function(w){
+            if(w.image) w.image = fixDrive(w.image, false);
+            if(w.video) w.video = fixDrive(w.video, true);
+            (w.media || []).forEach(function(m){ m.src = fixDrive(m.src, m.type === 'video');});
+      });
+  }
+  document.getElementById('autosave').addEventListener('click', function(){
   var pw = passInput.value.trim();
   var msg = document.getElementById('msg');
   if(!pw){ msg.textContent = 'Pehle save password daalo (upar wala box).'; return; }
   try { localStorage.setItem('photofliy_admin_pass', pw); } catch(e) {}
   msg.textContent = 'Save ho raha hai...';
-  fetch(SAVE_URL, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: pw, content: data})}).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
+  normalizeData(data);
+    fetch(SAVE_URL, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({password: pw, content: data})}).then(function(r){ return r.json().then(function(j){ return {ok: r.ok, status: r.status, body: j}; }); }).then(function(res){
     if(!res.ok){ throw new Error(res.status === 401 ? 'Password galat hai.' : (res.body.error || ('Save fail: ' + res.status))); }
     msg.textContent = 'Save ho gaya! Site 1-2 minute me apne aap update ho jayegi.';
   }).catch(function(err){
@@ -169,12 +186,14 @@ document.getElementById('autosave').addEventListener('click', function(){
   });
 });
 document.getElementById('download').addEventListener('click', function(){
+    normalizeData(data);
   var blob = new Blob([JSON.stringify(data, null, 1)], {type: 'application/json'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'portfolio.json'; a.click();
   document.getElementById('msg').textContent = 'Download ho gaya — ab GitHub me portfolio.json replace karo (steps upar).';
 });
 document.getElementById('copy').addEventListener('click', function(){
+  normalizeData(data);
   navigator.clipboard.writeText(JSON.stringify(data, null, 1)).then(function(){
     document.getElementById('msg').textContent = 'JSON copy ho gaya — GitHub me portfolio.json edit karke paste karo.';
   });
