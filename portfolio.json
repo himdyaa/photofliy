@@ -19,35 +19,60 @@
    "desc": "We don't just capture weddings — we preserve emotions, moments, and memories that last forever.",
    "id": "wedding",
    "image": "https://lh3.googleusercontent.com/d/151d1YP62ySDWVv5pRP6NkNU1bdy9_k9w",
-   "title": "Wedding Films & Visual Storytelling"
+   "title": "Wedding Films & Visual Storytelling",
+   "media": [
+    {
+     "type": "image",
+     "src": "https://lh3.googleusercontent.com/d/151d1YP62ySDWVv5pRP6NkNU1bdy9_k9w"
+    }
+   ]
   },
   {
    "category": "Pre-Wedding",
    "desc": "Before the vows are exchanged, there is a beautiful chapter filled with dreams, laughter, and endless love. A pre-wedding shoot captures those genuine moments when two hearts grow closer.",
    "id": "prewedding",
    "image": "https://lh3.googleusercontent.com/d/1HufmnYPO8dgjVdgWDSu36rXvmzAr13Em",
-   "title": "Pre-Wedding Cinematic Story"
+   "title": "Pre-Wedding Cinematic Story",
+   "media": [
+    {
+     "type": "image",
+     "src": "https://lh3.googleusercontent.com/d/1HufmnYPO8dgjVdgWDSu36rXvmzAr13Em"
+    }
+   ]
   },
   {
    "category": "Branding",
    "desc": "Branding shoots and edits for video editors and creative freelancers — visuals that make a brand impossible to ignore.",
    "id": "branding",
    "image": "",
-   "title": "Branding Shoots & Edits"
+   "title": "Branding Shoots & Edits",
+   "media": []
   },
   {
    "category": "Model",
    "desc": "A model shoot is more than capturing photographs — it's about expressing personality, confidence, style, and presence. Every frame is crafted to highlight the model's unique identity.",
    "id": "model",
-   "image": "https://lh3.googleusercontent.com/d/1rkpFz2a7m2BGAJ400_ZXXv5WSO2hyXAp",
-   "title": "Model Shoots"
+   "image": "https://drive.google.com/file/d/1qYrJt9j9HxWMgljCSqq1lhLoLT3SVkQX/view?usp=drivesdk",
+   "title": "Model Shoots",
+   "media": [
+    {
+     "type": "image",
+     "src": "https://drive.google.com/file/d/1qYrJt9j9HxWMgljCSqq1lhLoLT3SVkQX/view?usp=drivesdk"
+    },
+    {
+     "type": "image",
+     "src": "https://drive.google.com/file/d/1B3BiEkMN3iCA617IGZC9zNDUwsgWQiP6/view?usp=drivesdk"
+    }
+   ],
+   "video": ""
   },
   {
    "category": "Concert",
    "desc": "Live concert energy, cut like cinema — stage, crowd and sound woven into one unforgettable film.",
    "id": "concert-sunidhi",
    "image": "",
-   "title": "Concert — Sunidhi Chauhan"
+   "title": "Concert — Sunidhi Chauhan",
+   "media": []
   },
   {
    "category": "Concert",
@@ -55,7 +80,13 @@
    "id": "concert-ashking",
    "image": "",
    "title": "Concert — Ash King",
-   "video": "ashking-loop.mp4"
+   "video": "ashking-loop.mp4",
+   "media": [
+    {
+     "type": "video",
+     "src": "ashking-loop.mp4"
+    }
+   ]
   }
  ]
 }
