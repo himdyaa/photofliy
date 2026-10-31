@@ -87,6 +87,24 @@
      "src": "ashking-loop.mp4"
     }
    ]
+  },
+  {
+   "id": "work-1793407734028",
+   "title": "CINEMATIC CAPTURES",
+   "category": "Wedding",
+   "image": "",
+   "video": "https://drive.google.com/file/d/1FCTAZzlP3EBJGY4v1Pk2arhsbNV5naDp/view?usp=drivesdk",
+   "media": [
+    {
+     "type": "video",
+     "src": "https://drive.google.com/file/d/1FCTAZzlP3EBJGY4v1Pk2arhsbNV5naDp/view?usp=drivesdk"
+    },
+    {
+     "type": "video",
+     "src": "https://drive.google.com/file/d/1Fpe7vmk-kIJhEpmBe_9fLaBQoVyj6XsV/view?usp=drivesdk"
+    }
+   ],
+   "desc": "Moments in cinematics "
   }
  ]
 }
